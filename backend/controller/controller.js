@@ -36,6 +36,7 @@ if(userData)
     response['mssg']=`user ${email} arleady registered`
     return res.json(response)
 }
+
 else{
     const saltRounds = 1;
     bcrypt.genSalt(saltRounds, function(err, salt) {
