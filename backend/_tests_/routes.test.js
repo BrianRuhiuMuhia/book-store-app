@@ -1,11 +1,17 @@
 const app=require("../app.js")
 const request=require("supertest")
+const {db}=require("../db/db.js")
+// beforeAll(async () => {
+//     await db.end(); // disconnect from the db before tests
+//   });
+//   afterAll(async () => {
+//     await db.connect(); // reconnect to the db after tests
+//   });
 describe("GET all books",()=>{
     it("should get all books in the database",async ()=>{
         const response=await request(app).get("/all")
         expect(response.status).toBe(200)
         expect(response.headers['content-type']).toMatch(/json/)
-        console.log(response.body)
         expect(response.body.length).toBeGreaterThan(0)
     })
 })
@@ -41,5 +47,31 @@ describe("delete a book",()=>{
     it("should delete a book",async ()=>{
         const response=await request(app).delete("/delete/1")
         expect(response.status).toBe(200)
+    })
+})
+describe("POST login",()=>{
+    it("should login a user",async ()=>{
+        const response=await request(app).post("/login").send({
+            "firstName":"Brian",
+            "lastName":"Ruhiu",
+            "email":"1234@gmail.com",
+            "password":"1234"
+        })
+        expect(response.status).toBe(200)
+        expect(response.body["email"]).toBe("1234@gmail.com")
+     
+
+    })
+})
+describe("POST register",()=>{
+    it("should register a user",async ()=>{
+        const response=await request(app).post("/register").send({
+            "firstName":"Brian",
+            "lastName":"Ruhiu",
+            "email":"1234@gmail.com",
+            "password":"1234"
+        })
+        expect(response.status).toBe(200)
+        expect(response.body["email"]).toBe("1234@gmail.com")
     })
 })
