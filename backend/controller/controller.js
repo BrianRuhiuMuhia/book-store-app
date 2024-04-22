@@ -170,9 +170,11 @@ function logout(req,res)
 }
 function deleteBook(req,res)
 {
-    const {id}=req.params
+    const {id,title}=req.body
     try{
 db.query("delete from users_books where book_id=$1",[id])
+console.log("deleted",title)
+return res.status(200).json({"message":`book ${title} deleted`})
     }
     catch(error)
     {

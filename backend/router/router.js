@@ -8,5 +8,5 @@ router.post("/register",register)
 router.post("/addbook",addBook)
 router.post("/logout",logout)
 router.get("/books",authUser,getUserBooks)
-router.delete("/book/:id",authUser,deleteBook)
+router.delete("/deletebook",authUser,deleteBook)
 module.exports=router
