@@ -119,9 +119,18 @@ function addBook(req,res)
     =req.body
     const bookId=id
     const user=req.session.user
-    console.log(user)
     try{
-        db.query("insert into users_books(user_id,book_id) values($1,$2)",[user["id"],bookId])
+        db.query("select * from users_books where book_id = $1",[bookId],(err,result)=>{
+            if(result.rows.length>0)
+            {
+                return res.status(200).json({"message":"book arleady saved"})
+            }
+            else{
+                db.query("insert into users_books(user_id,book_id) values($1,$2)",[user["id"],bookId])
+            }
+
+        })
+     
         
         
 return res.status(201).json({"message":`book ${title} added`})
@@ -151,4 +160,23 @@ db.query("select *,users_books.user_id from books join users_books on(users_book
         return res.status(500).json({"message":"server error"})
     }
 }
-module.exports={allData,login,register,addBook,getUserBooks}
+function logout(req,res)
+{
+    req.session.destroy(() => {
+        removeCookie("jwt",res,token)
+        console.log("Session destroyed!");
+        res.status(200).json({"route":"/login","message":"logged out"})
+      });
+}
+function deleteBook(req,res)
+{
+    const {id}=req.params
+    try{
+db.query("delete from users_books where book_id=$1",[id])
+    }
+    catch(error)
+    {
+        console.log(error)
+    }
+}
+module.exports={allData,login,register,addBook,getUserBooks,logout,deleteBook}
