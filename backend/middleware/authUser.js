@@ -10,7 +10,7 @@ if(token)
     {
 if(err)
 {
-  return  res.json({"route":"/login"})
+  return  res.status(400).redirect("login")
 }
 else{
     next()
@@ -18,7 +18,7 @@ else{
     })
 }
 else{
-   return res.json({"route":"/login"})
+   return res.status(400).redirect("login")
 }
 }
 module.exports={authUser}

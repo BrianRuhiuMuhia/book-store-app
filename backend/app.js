@@ -2,8 +2,9 @@ const express=require("express")
 const app=express()
 const dotenv=require("dotenv")
 const cors=require("cors")
-const session = require('express-session');
+const session = require('express-session')
 const cookieParser=require("cookie-parser")
+const path=require("path")
 const port=process.env.PORT || 5000
 const router=require("./router/router.js")
 app.use(session({
@@ -28,9 +29,11 @@ const corsOptions = {
        
       ]
   };
+  app.set('view engine', 'ejs');
+  app.set('views', path.join(__dirname, 'views'))
+  app.use(express.static("public"))
   app.use(cors(corsOptions));
-  app.use(cookieParser())
-  app.use(cookieParser(process.env.SECRET, { debug: true }));
+  app.use(cookieParser(process.env.SECRET, { debug: true }))
   app.disable("x-powered-by"); //Reduce fingerprinting
   app.use(router)
 

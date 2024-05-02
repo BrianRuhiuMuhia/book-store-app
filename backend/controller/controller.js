@@ -65,7 +65,6 @@ catch(error)
 }
 function login(req,res){
     const {firstName,lastName,email,password}=req.body
-
     const response={
         // "route":"/",
         "mssg":{"message":`user ${firstName} logged in`,
@@ -78,8 +77,7 @@ db.query("select * from users where email=$1",[email],(error,result)=>{
     {
         if(record["first_name"]!==firstName || record["last_name"]!==lastName)
         {
-            response["mssg"]={"message":"check values in the field","status":"error"}
-            response['route']=undefined
+            response["mssg"]={"message":"check values in the field"}
             return res.json(response)
         }
         bcrypt.compare(password, record.password, function(err, result) {
@@ -93,11 +91,12 @@ db.query("select * from users where email=$1",[email],(error,result)=>{
                   });
                 req.session.user = record;
                 currUserId=record["id"]
-                return res.status(303).json(response)
+                return res.status(303).redirect("/all")
             }
             else{
-              
-                return res.status(400).json(response)
+                response["mssg"]={"message":"check values in the field","status":"error"}
+                return res.json(response)
+             
             }
         
             })
@@ -181,4 +180,8 @@ return res.status(200).json({"message":`book ${title} deleted`})
         console.log(error)
     }
 }
-module.exports={allData,login,register,addBook,getUserBooks,logout,deleteBook}
+function loginPage(req,res)
+{
+return res.status(200).render("login")
+}
+module.exports={allData,login,register,addBook,getUserBooks,logout,deleteBook,loginPage}

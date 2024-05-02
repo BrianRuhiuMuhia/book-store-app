@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/login.css">
+    <title>LogIn</title>
+</head>
+<body>
+    <form class="form">
+        <div class="field">
+              <label>first name</label>
+        <input type="text" class="fName">
+        <small class="error fNameMssg hidden">name should be 0 to 30</small>
+        </div>
+        <div class="field">
+            <label>last name</label>
+      <input type="text" class="lName">
+      <small class="error lNameMssg hidden">name should be 0 to 30</small>
+      </div>
+      <div class="field">
+                <label>Email</label>
+        <input type="email" class="email">
+        <small class="error emailMssg hidden">email should be in the correct format</small>
+      </div>
+
+        <div class="password-input">
+            <div class="password-box">
+                     <label>Password</label>
+        <input type="password" class="password">
+        <small class="error passwordMssg hidden">Must be at least 8 characters long,include numbers,letters,symbols</small>
+            </div>
+            <div>
+                <label>Show Password</label>
+                <input type="checkbox" class="show-password">
+            </div>
+   
+        </div>
+
+        <button class="sub-btn">Submit</button>
+    </form>
+</body>
+<script src="js/userInputs.js" defer></script>
+</html>
