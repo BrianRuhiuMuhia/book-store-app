@@ -86,17 +86,14 @@ function apiRequest(data,url)
     xmlRequest.setRequestHeader('Content-Type', 'application/json');
     xmlRequest.onload = function() {
         if (xmlRequest.status >= 200 && xmlRequest.status < 400) {
-          // Success!
           const response = JSON.parse(xmlRequest.responseText);
           console.log(response);
         } else {
-          // Error :(
           console.log('Error', xmlRequest.statusText);
         }
       };
       
       xmlRequest.onerror = function() {
-        // Error :(
         console.log('Error', xmlRequest.statusText);
       };
       xmlRequest.send(JSON.stringify(data))
